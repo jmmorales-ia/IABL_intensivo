@@ -7,12 +7,12 @@ export default function ProgressBar({ completed, total }: { completed: number; t
         <span className="text-text-primary">
           {completed} de {total} días desbloqueados completados
         </span>
-        <span className="text-text-secondary">{pct}%</span>
+        <span className="font-semibold text-accent">{pct}%</span>
       </div>
-      <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-card">
+      <div className="mt-2 h-2.5 w-full overflow-hidden rounded-full bg-card">
         <div
-          className="h-full rounded-full bg-accent transition-all"
-          style={{ width: `${pct}%` }}
+          className="h-full rounded-full bg-accent shadow-glow transition-all duration-500"
+          style={{ width: `${Math.max(pct, 3)}%` }}
         />
       </div>
     </div>

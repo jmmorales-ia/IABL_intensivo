@@ -70,21 +70,31 @@ export default function DiasPage() {
 
   const unlockedDays = bundle.days.filter((d) => d.is_unlocked);
   const completedUnlockedCount = unlockedDays.filter((d) => completedDayIds.has(d.id)).length;
+  const nextDay = unlockedDays.find((d) => !completedDayIds.has(d.id));
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-lg flex-col px-4 py-8">
+    <main className="mx-auto flex min-h-screen max-w-2xl flex-col px-4 py-10 sm:px-8 sm:py-14">
       <header>
-        <p className="text-sm text-text-secondary">{bundle.edition.name}</p>
-        <h1 className="mt-1 text-xl font-semibold text-text-primary">Hola, {studentName}</h1>
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+          {bundle.edition.name}
+        </p>
+        <h1 className="mt-2 text-2xl font-semibold text-text-primary sm:text-3xl">
+          Hola, {studentName}
+        </h1>
       </header>
 
-      <div className="mt-6">
+      <div className="mt-8">
         <ProgressBar completed={completedUnlockedCount} total={unlockedDays.length} />
       </div>
 
-      <div className="mt-6 flex flex-col gap-2">
+      <div className="mt-8 flex flex-col gap-3">
         {bundle.days.map((day) => (
-          <DayCard key={day.id} day={day} completed={completedDayIds.has(day.id)} />
+          <DayCard
+            key={day.id}
+            day={day}
+            completed={completedDayIds.has(day.id)}
+            isNext={nextDay?.id === day.id}
+          />
         ))}
       </div>
 

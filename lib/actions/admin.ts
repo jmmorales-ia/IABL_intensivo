@@ -148,8 +148,6 @@ export async function cloneEdition(
           action_html: day.action_html,
           proof_required: day.proof_required,
           note_html: day.note_html,
-          audio_url: day.audio_url,
-          video_url: day.video_url,
         };
       }),
     });
@@ -217,8 +215,6 @@ export interface DayUpdateInput {
   action_html: string | null;
   proof_required: string | null;
   note_html: string | null;
-  audio_url: string | null;
-  video_url: string | null;
 }
 
 export async function updateDay(dayId: string, data: DayUpdateInput) {
@@ -236,8 +232,6 @@ export async function updateDay(dayId: string, data: DayUpdateInput) {
       action_html: data.action_html || null,
       proof_required: data.proof_required || null,
       note_html: data.note_html || null,
-      audio_url: data.audio_url || null,
-      video_url: data.video_url || null,
     },
   });
   revalidatePath("/admin/days");

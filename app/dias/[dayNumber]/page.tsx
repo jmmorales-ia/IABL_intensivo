@@ -85,11 +85,14 @@ export default function DayPage() {
   }
 
   return (
-    <main className="mx-auto min-h-screen max-w-lg px-4 py-8">
-      <Link href="/dias" className="text-sm text-text-secondary hover:text-accent">
+    <main className="mx-auto min-h-screen max-w-2xl px-4 py-10 sm:px-8 sm:py-14">
+      <Link
+        href="/dias"
+        className="text-sm text-text-secondary transition hover:text-accent"
+      >
         &larr; Todos los días
       </Link>
-      <div className="mt-4">
+      <div className="mt-6">
         <DayDetail studentId={studentId!} day={day} initiallyCompleted={completed} />
       </div>
     </main>

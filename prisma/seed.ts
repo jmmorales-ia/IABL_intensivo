@@ -23,8 +23,6 @@ type SeedDay = {
   action_html: string | null;
   proof_required: string | null;
   note_html: string | null;
-  audio_url: string | null;
-  video_url: string | null;
 };
 
 const days: SeedDay[] = [
@@ -54,8 +52,6 @@ const days: SeedDay[] = [
     proof_required:
       "Tu frase en el grupo, con esta forma: \"Trabajo con [negocios que (problema) / sector concreto]. Pierden [qué] por eso. Les vendo [servicio] por [X]€.\"",
     note_html: `<p><strong>Aviso.</strong> Publícala aunque no te convenza. Mañana la corregimos entre todos. Lo que no se puede es llegar mañana sin nada escrito.</p>`,
-    audio_url: null,
-    video_url: null,
   },
   {
     day_number: 2,
@@ -78,8 +74,6 @@ const days: SeedDay[] = [
 <p>No hace falta que los 20 encajen con tu nicho.</p>`,
     proof_required: "Captura de la lista con los 20, y tu frase final después de la sesión.",
     note_html: `<p><strong>Audio del día · 60 segundos.</strong> Hoy vas a hacer una lista y te va a pasar una cosa: vas a ir tachando gente por adelantado. Este no, que hace años que no hablamos. Este tampoco, que qué va a pensar. Y vas a acabar con seis nombres en vez de veinte. No filtres. Filtrar hoy es decidir por otro lo que otro va a contestar, y tú no tienes ni idea de lo que va a contestar. Nadie la tiene. Escríbelos todos. Ya decidiremos luego a quién le escribes primero. Hoy la tarea es que la lista exista, no que sea buena.</p>`,
-    audio_url: "https://example.com/audio/dia-2.mp3",
-    video_url: null,
   },
   {
     day_number: 3,
@@ -104,8 +98,6 @@ const days: SeedDay[] = [
     proof_required:
       "El vídeo de 30 segundos, o el número al que llamar, con el nombre del negocio visible o dicho.",
     note_html: `<p><strong>Material que hay que tener listo.</strong> La skill de investigación de prospecto, empaquetada y descargable (ver sección de Recursos), con instrucciones de instalación en una página. Más el vídeo de apoyo con el proceso completo en pantalla sobre un negocio real: cómo se lanza, qué devuelve, qué se usa y qué se descarta, y cómo pasa a la demo. Sin cortes, incluida la parte que sale regular.</p>`,
-    audio_url: null,
-    video_url: "https://example.com/video/dia-3.mp4",
   },
   {
     day_number: 4,
@@ -130,8 +122,6 @@ const days: SeedDay[] = [
     proof_required: "Captura de los tres mensajes enviados, con la hora visible.",
     note_html: `<p><strong>Al que llegue sin demo:</strong> envías igual, con lo que tengas. Hoy nadie se queda sin enviar. La demo se recupera mañana; el día de enviar acompañado no vuelve.</p>
 <p><strong>Material que hay que tener listo.</strong> Las tres plantillas (ver sección de Recursos) publicadas antes de la sesión, en texto copiable, no en imagen.</p>`,
-    audio_url: null,
-    video_url: null,
   },
   {
     day_number: 5,
@@ -160,8 +150,6 @@ const days: SeedDay[] = [
 <p><strong>El número es siete y da igual de dónde salgan.</strong> Nadie termina el viernes por debajo de siete porque no tenía a quién escribir.</p>`,
     proof_required: "Captura de los siete enviados y de los seguimientos.",
     note_html: `<p><strong>Audio del día · 75 segundos.</strong> A estas alturas ya te habrán dejado en visto. Y hay una interpretación automática que te va a venir sola: no le ha interesado. Piensa en lo que pasó de verdad. Le llegó tu mensaje un jueves por la tarde, con el negocio abierto, un proveedor al teléfono y alguien esperando en el mostrador. Lo abrió, lo dejó para luego y luego no llegó. Eso es todo. El segundo toque de hoy no es insistir. Es volver a aparecer cuando la otra persona tiene las manos libres. Ahí es donde aparece la mitad de las respuestas. Corto, sin disculpas y sin explicar por qué vuelves a escribir. Cuanto más justificas el segundo mensaje, más parece que estás pidiendo perdón por existir.</p>`,
-    audio_url: "https://example.com/audio/dia-5.mp3",
-    video_url: null,
   },
   {
     day_number: 6,
@@ -193,8 +181,6 @@ const days: SeedDay[] = [
 <p><strong>Si tu nicho no está en LinkedIn</strong> (bares, peluquerías, talleres), lo haces igual. No es para conseguirlos ahí: es para que quien busque tu nombre encuentre a alguien que se dedica a esto.</p>`,
     proof_required: "Captura del perfil, enlace al perfil y enlace al post, en el grupo.",
     note_html: `<p><strong>Material de apoyo.</strong> Vídeo de 6 minutos: tres titulares reales del grupo corregidos en pantalla, del genérico al concreto, y un post de ejemplo montado desde cero con la estructura de cuatro bloques.</p>`,
-    audio_url: null,
-    video_url: "https://example.com/video/dia-6.mp4",
   },
   {
     day_number: 7,
@@ -221,8 +207,6 @@ const days: SeedDay[] = [
 <p>Publica los números en el grupo. Los que sean. Si son diez enviados y cero respuestas, se publican diez y cero.</p>`,
     proof_required: "Los cuatro números y las tres líneas, en el grupo.",
     note_html: `<p><strong>Audio del día · 75 segundos.</strong> Hoy toca mirar los números, y quiero avisarte de algo antes de que los mires. Si has enviado diez mensajes y no ha contestado nadie, tu cabeza va a sacar una conclusión inmediata: esto no funciona. O peor: yo no valgo para esto. Con diez datos. Diez. Con diez mensajes no se puede concluir nada, ni bueno ni malo. Lo único que dicen esos diez es que enviaste, y que hace una semana no lo hacías. Los números de hoy no son una nota. Son el punto de partida para saber qué tocar mañana. Si nadie contestó, cambiamos la primera línea. Si contestaron y se enfrió, cambiamos el cierre. Eso es todo lo que significan. Publícalos como salgan. Aquí el que publica un cero honesto va por delante del que no ha enviado nada.</p>`,
-    audio_url: "https://example.com/audio/dia-7.mp3",
-    video_url: null,
   },
 ];
 
@@ -240,8 +224,6 @@ for (let dayNumber = 8; dayNumber <= 30; dayNumber++) {
     action_html: null,
     proof_required: null,
     note_html: null,
-    audio_url: null,
-    video_url: null,
   });
 }
 
@@ -350,8 +332,6 @@ async function main() {
       action_html: d.action_html,
       proof_required: d.proof_required,
       note_html: d.note_html,
-      audio_url: d.audio_url,
-      video_url: d.video_url,
     })),
   });
 

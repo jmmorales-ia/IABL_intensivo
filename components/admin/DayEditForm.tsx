@@ -23,8 +23,6 @@ export default function DayEditForm({ day }: { day: Day }) {
     action_html: day.action_html ?? "",
     proof_required: day.proof_required ?? "",
     note_html: day.note_html ?? "",
-    audio_url: day.audio_url ?? "",
-    video_url: day.video_url ?? "",
   });
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -53,8 +51,6 @@ export default function DayEditForm({ day }: { day: Day }) {
         action_html: form.action_html || null,
         proof_required: form.proof_required || null,
         note_html: form.note_html || null,
-        audio_url: form.audio_url || null,
-        video_url: form.video_url || null,
       };
       await updateDay(day.id, payload);
       setSaved(true);
@@ -176,27 +172,6 @@ export default function DayEditForm({ day }: { day: Day }) {
           rows={5}
           className={`${inputClass} font-mono text-xs`}
         />
-      </div>
-
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div>
-          <label className={labelClass}>URL de audio (opcional)</label>
-          <input
-            type="url"
-            value={form.audio_url}
-            onChange={(e) => set("audio_url", e.target.value)}
-            className={inputClass}
-          />
-        </div>
-        <div>
-          <label className={labelClass}>URL de vídeo (opcional)</label>
-          <input
-            type="url"
-            value={form.video_url}
-            onChange={(e) => set("video_url", e.target.value)}
-            className={inputClass}
-          />
-        </div>
       </div>
 
       {error && <p className="text-sm text-red-400">{error}</p>}

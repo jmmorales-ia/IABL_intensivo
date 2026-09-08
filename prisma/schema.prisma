@@ -50,9 +50,6 @@ model Day {
   proof_required  String? @db.Text
   note_html       String? @db.Text
 
-  audio_url String?
-  video_url String?
-
   progress Progress[]
 
   @@unique([edition_id, day_number])

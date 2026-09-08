@@ -12,6 +12,10 @@ body {
   box-sizing: border-box;
 }
 
+.prose-content {
+  line-height: 1.75;
+}
+
 .prose-content strong {
   color: #dce3f0;
   font-weight: 600;
@@ -19,8 +23,8 @@ body {
 
 .prose-content ul,
 .prose-content ol {
-  margin: 0.75rem 0;
-  padding-left: 1.25rem;
+  margin: 1.1rem 0;
+  padding-left: 1.4rem;
 }
 
 .prose-content ul {
@@ -32,11 +36,16 @@ body {
 }
 
 .prose-content li {
-  margin: 0.35rem 0;
+  margin: 0.6rem 0;
+  padding-left: 0.15rem;
+}
+
+.prose-content li::marker {
+  color: #1e9eff;
 }
 
 .prose-content p {
-  margin: 0.75rem 0;
+  margin: 1.1rem 0;
 }
 
 .prose-content p:first-child {
