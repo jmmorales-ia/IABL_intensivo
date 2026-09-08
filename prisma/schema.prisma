@@ -50,7 +50,9 @@ model Day {
   proof_required  String? @db.Text
   note_html       String? @db.Text
 
-  progress Progress[]
+  progress    Progress[]
+  resources   Resource[]
+  skill_files SkillFile[]
 
   @@unique([edition_id, day_number])
   @@index([edition_id])
@@ -93,6 +95,8 @@ model Resource {
   price_range  String?
   sort_order   Int          @default(0)
 
+  days Day[]
+
   @@index([edition_id])
   @@map("resources")
 }
@@ -104,6 +108,8 @@ model SkillFile {
   title             String
   download_url      String
   instructions_html String  @db.Text
+
+  days Day[]
 
   @@index([edition_id])
   @@map("skill_files")

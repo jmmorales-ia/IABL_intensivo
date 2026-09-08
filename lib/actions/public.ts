@@ -98,6 +98,10 @@ export async function getDayForStudent(studentId: string, dayNumber: number) {
   }
   const day = await prisma.day.findUnique({
     where: { edition_id_day_number: { edition_id: student.edition_id, day_number: dayNumber } },
+    include: {
+      resources: { orderBy: [{ type: "asc" }, { sort_order: "asc" }] },
+      skill_files: true,
+    },
   });
   if (!day) return null;
 

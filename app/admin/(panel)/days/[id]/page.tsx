@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getDay } from "@/lib/actions/admin";
+import { getDay, listResources, listSkillFiles } from "@/lib/actions/admin";
 import DayEditForm from "@/components/admin/DayEditForm";
 
 export default async function AdminDayEditPage({ params }: { params: { id: string } }) {
@@ -9,6 +9,11 @@ export default async function AdminDayEditPage({ params }: { params: { id: strin
   if (!day) {
     notFound();
   }
+
+  const [resources, skillFiles] = await Promise.all([
+    listResources(day.edition_id),
+    listSkillFiles(day.edition_id),
+  ]);
 
   return (
     <div>
@@ -19,7 +24,7 @@ export default async function AdminDayEditPage({ params }: { params: { id: strin
         Día {day.day_number} · {day.title}
       </h1>
       <div className="mt-6">
-        <DayEditForm day={day} />
+        <DayEditForm day={day} availableResources={resources} availableSkillFiles={skillFiles} />
       </div>
     </div>
   );

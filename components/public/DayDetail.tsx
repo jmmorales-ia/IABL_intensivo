@@ -1,9 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import type { Day } from "@prisma/client";
+import type { Day, Resource, SkillFile } from "@prisma/client";
 import { formatFullDate } from "@/lib/format";
 import { markDayComplete } from "@/lib/actions/public";
+import CopyButton from "./CopyButton";
+
+type DayWithResources = Day & { resources: Resource[]; skill_files: SkillFile[] };
 
 export default function DayDetail({
   studentId,
@@ -11,7 +14,7 @@ export default function DayDetail({
   initiallyCompleted,
 }: {
   studentId: string;
-  day: Day;
+  day: DayWithResources;
   initiallyCompleted: boolean;
 }) {
   const [completed, setCompleted] = useState(initiallyCompleted);
@@ -68,6 +71,53 @@ export default function DayDetail({
             className="prose-content mt-4 text-[15px] text-text-primary sm:text-base"
             dangerouslySetInnerHTML={{ __html: day.action_html }}
           />
+        </section>
+      )}
+
+      {(day.resources.length > 0 || day.skill_files.length > 0) && (
+        <section className="rounded-xl border-l-4 border-accent bg-card p-5 sm:p-7">
+          <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-accent">
+            Recursos de este día
+          </h2>
+          <div className="mt-4 flex flex-col gap-4">
+            {day.resources.map((r) => (
+              <div key={r.id} className="rounded-lg border border-white/10 bg-bg/40 p-4">
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="text-[15px] font-medium text-text-primary">{r.title}</h3>
+                  {r.price_range && (
+                    <span className="flex-none whitespace-nowrap text-xs font-semibold text-accent">
+                      {r.price_range}
+                    </span>
+                  )}
+                </div>
+                <div
+                  className="prose-content mt-2 text-sm text-text-secondary"
+                  dangerouslySetInnerHTML={{ __html: r.content_html }}
+                />
+                <div className="mt-3">
+                  <CopyButton html={r.content_html} />
+                </div>
+              </div>
+            ))}
+
+            {day.skill_files.map((s) => (
+              <div key={s.id} className="rounded-lg border border-white/10 bg-bg/40 p-4">
+                <h3 className="text-[15px] font-medium text-text-primary">{s.title}</h3>
+                <div
+                  className="prose-content mt-2 text-sm text-text-secondary"
+                  dangerouslySetInnerHTML={{ __html: s.instructions_html }}
+                />
+                <a
+                  href={s.download_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-3 inline-block rounded-lg border border-accent px-4 py-2 text-sm font-medium text-accent transition hover:bg-accent hover:text-white hover:shadow-glow"
+                >
+                  Descargar
+                </a>
+              </div>
+            ))}
+          </div>
         </section>
       )}
 

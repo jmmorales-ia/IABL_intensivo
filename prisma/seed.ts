@@ -335,29 +335,43 @@ async function main() {
     })),
   });
 
-  await prisma.resource.createMany({
-    data: catalogItems.map((item) => ({
-      edition_id: edition.id,
-      type: ResourceType.catalog_item,
-      title: item.title,
-      content_html: item.content_html,
-      price_range: item.price_range,
-      sort_order: item.sort_order,
-    })),
+  const createdDays = await prisma.day.findMany({
+    where: { edition_id: edition.id },
+    select: { id: true, day_number: true },
   });
+  const dayIdByNumber = new Map(createdDays.map((d) => [d.day_number, d.id]));
 
-  await prisma.resource.createMany({
-    data: templates.map((item) => ({
-      edition_id: edition.id,
-      type: ResourceType.template,
-      title: item.title,
-      content_html: item.content_html,
-      price_range: null,
-      sort_order: item.sort_order,
-    })),
-  });
+  await Promise.all(
+    catalogItems.map((item) =>
+      prisma.resource.create({
+        data: {
+          edition_id: edition.id,
+          type: ResourceType.catalog_item,
+          title: item.title,
+          content_html: item.content_html,
+          price_range: item.price_range,
+          sort_order: item.sort_order,
+        },
+      })
+    )
+  );
 
-  await prisma.skillFile.create({
+  const newTemplates = await Promise.all(
+    templates.map((item) =>
+      prisma.resource.create({
+        data: {
+          edition_id: edition.id,
+          type: ResourceType.template,
+          title: item.title,
+          content_html: item.content_html,
+          price_range: null,
+          sort_order: item.sort_order,
+        },
+      })
+    )
+  );
+
+  const skillFile = await prisma.skillFile.create({
     data: {
       edition_id: edition.id,
       title: "Skill de investigación de prospecto",
@@ -366,6 +380,38 @@ async function main() {
         "<p>Instrucciones de instalación pendientes de completar en el panel de admin.</p>",
     },
   });
+
+  const templateIds = newTemplates.map((t) => ({ id: t.id }));
+
+  // Día 3: investigar y montar la demo con la skill.
+  const day3Id = dayIdByNumber.get(3);
+  if (day3Id) {
+    await prisma.day.update({
+      where: { id: day3Id },
+      data: { skill_files: { connect: { id: skillFile.id } } },
+    });
+  }
+
+  // Día 4: envío en directo con las tres plantillas.
+  const day4Id = dayIdByNumber.get(4);
+  if (day4Id) {
+    await prisma.day.update({
+      where: { id: day4Id },
+      data: { resources: { connect: templateIds } },
+    });
+  }
+
+  // Día 5: más envíos y seguimientos, reutilizando plantillas y skill como último recurso.
+  const day5Id = dayIdByNumber.get(5);
+  if (day5Id) {
+    await prisma.day.update({
+      where: { id: day5Id },
+      data: {
+        resources: { connect: templateIds },
+        skill_files: { connect: { id: skillFile.id } },
+      },
+    });
+  }
 
   console.log(`Edición "${EDITION_NAME}" creada (id: ${edition.id}) con ${days.length} días.`);
 }

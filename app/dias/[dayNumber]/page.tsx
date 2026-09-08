@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import type { Day } from "@prisma/client";
+import type { Day, Resource, SkillFile } from "@prisma/client";
 import { getStudentSession, getDayForStudent } from "@/lib/actions/public";
 import { getStoredStudentId, clearStoredStudentId } from "@/lib/client/storage";
 import DayDetail from "@/components/public/DayDetail";
+
+type DayWithResources = Day & { resources: Resource[]; skill_files: SkillFile[] };
 
 export default function DayPage() {
   const router = useRouter();
@@ -15,7 +17,7 @@ export default function DayPage() {
 
   const [loading, setLoading] = useState(true);
   const [studentId, setStudentId] = useState<string | null>(null);
-  const [day, setDay] = useState<Day | null>(null);
+  const [day, setDay] = useState<DayWithResources | null>(null);
   const [completed, setCompleted] = useState(false);
   const [notFound, setNotFound] = useState(false);
 

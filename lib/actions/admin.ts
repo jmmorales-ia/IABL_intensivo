@@ -113,7 +113,16 @@ export async function cloneEdition(
 
   const source = await prisma.edition.findUnique({
     where: { id: sourceEditionId },
-    include: { days: true, resources: true, skill_files: true },
+    include: {
+      days: {
+        include: {
+          resources: { select: { id: true } },
+          skill_files: { select: { id: true } },
+        },
+      },
+      resources: true,
+      skill_files: true,
+    },
   });
   if (!source) {
     throw new Error("Edición de origen no encontrada.");
@@ -130,51 +139,67 @@ export async function cloneEdition(
     },
   });
 
+  const newResources = await Promise.all(
+    source.resources.map((r) =>
+      prisma.resource.create({
+        data: {
+          edition_id: newEdition.id,
+          type: r.type,
+          title: r.title,
+          content_html: r.content_html,
+          price_range: r.price_range,
+          sort_order: r.sort_order,
+        },
+      })
+    )
+  );
+  const resourceIdMap = new Map(source.resources.map((r, i) => [r.id, newResources[i].id]));
+
+  const newSkillFiles = await Promise.all(
+    source.skill_files.map((s) =>
+      prisma.skillFile.create({
+        data: {
+          edition_id: newEdition.id,
+          title: s.title,
+          download_url: s.download_url,
+          instructions_html: s.instructions_html,
+        },
+      })
+    )
+  );
+  const skillIdMap = new Map(source.skill_files.map((s, i) => [s.id, newSkillFiles[i].id]));
+
   if (source.days.length > 0) {
-    await prisma.day.createMany({
-      data: source.days.map((day) => {
+    await Promise.all(
+      source.days.map((day) => {
         const date = new Date(newStart);
         date.setDate(date.getDate() + (day.day_number - 1));
-        return {
-          edition_id: newEdition.id,
-          day_number: day.day_number,
-          date,
-          title: day.title,
-          time_estimate_minutes: day.time_estimate_minutes,
-          is_live_session: day.is_live_session,
-          live_session_label: day.live_session_label,
-          is_unlocked: false,
-          why_today: day.why_today,
-          action_html: day.action_html,
-          proof_required: day.proof_required,
-          note_html: day.note_html,
-        };
-      }),
-    });
-  }
-
-  if (source.resources.length > 0) {
-    await prisma.resource.createMany({
-      data: source.resources.map((r) => ({
-        edition_id: newEdition.id,
-        type: r.type,
-        title: r.title,
-        content_html: r.content_html,
-        price_range: r.price_range,
-        sort_order: r.sort_order,
-      })),
-    });
-  }
-
-  if (source.skill_files.length > 0) {
-    await prisma.skillFile.createMany({
-      data: source.skill_files.map((s) => ({
-        edition_id: newEdition.id,
-        title: s.title,
-        download_url: s.download_url,
-        instructions_html: s.instructions_html,
-      })),
-    });
+        const newResourceIds = day.resources
+          .map((r) => resourceIdMap.get(r.id))
+          .filter((id): id is string => Boolean(id));
+        const newSkillFileIds = day.skill_files
+          .map((s) => skillIdMap.get(s.id))
+          .filter((id): id is string => Boolean(id));
+        return prisma.day.create({
+          data: {
+            edition_id: newEdition.id,
+            day_number: day.day_number,
+            date,
+            title: day.title,
+            time_estimate_minutes: day.time_estimate_minutes,
+            is_live_session: day.is_live_session,
+            live_session_label: day.live_session_label,
+            is_unlocked: false,
+            why_today: day.why_today,
+            action_html: day.action_html,
+            proof_required: day.proof_required,
+            note_html: day.note_html,
+            resources: { connect: newResourceIds.map((id) => ({ id })) },
+            skill_files: { connect: newSkillFileIds.map((id) => ({ id })) },
+          },
+        });
+      })
+    );
   }
 
   revalidatePath("/admin/editions");
@@ -193,7 +218,13 @@ export async function listDays(editionId: string) {
 
 export async function getDay(dayId: string) {
   await assertAdmin();
-  return prisma.day.findUnique({ where: { id: dayId } });
+  return prisma.day.findUnique({
+    where: { id: dayId },
+    include: {
+      resources: { select: { id: true } },
+      skill_files: { select: { id: true } },
+    },
+  });
 }
 
 export async function toggleDayLock(dayId: string) {
@@ -215,6 +246,8 @@ export interface DayUpdateInput {
   action_html: string | null;
   proof_required: string | null;
   note_html: string | null;
+  resource_ids: string[];
+  skill_file_ids: string[];
 }
 
 export async function updateDay(dayId: string, data: DayUpdateInput) {
@@ -232,6 +265,8 @@ export async function updateDay(dayId: string, data: DayUpdateInput) {
       action_html: data.action_html || null,
       proof_required: data.proof_required || null,
       note_html: data.note_html || null,
+      resources: { set: data.resource_ids.map((id) => ({ id })) },
+      skill_files: { set: data.skill_file_ids.map((id) => ({ id })) },
     },
   });
   revalidatePath("/admin/days");

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import type { Day } from "@prisma/client";
+import type { Day, Resource, SkillFile } from "@prisma/client";
 import { updateDay, type DayUpdateInput } from "@/lib/actions/admin";
 
 function toDateInputValue(date: Date | string): string {
@@ -10,7 +10,20 @@ function toDateInputValue(date: Date | string): string {
   return d.toISOString().slice(0, 10);
 }
 
-export default function DayEditForm({ day }: { day: Day }) {
+type DayWithLinks = Day & {
+  resources: { id: string }[];
+  skill_files: { id: string }[];
+};
+
+export default function DayEditForm({
+  day,
+  availableResources,
+  availableSkillFiles,
+}: {
+  day: DayWithLinks;
+  availableResources: Resource[];
+  availableSkillFiles: SkillFile[];
+}) {
   const router = useRouter();
   const [form, setForm] = useState({
     date: toDateInputValue(day.date),
@@ -24,12 +37,24 @@ export default function DayEditForm({ day }: { day: Day }) {
     proof_required: day.proof_required ?? "",
     note_html: day.note_html ?? "",
   });
+  const [resourceIds, setResourceIds] = useState<string[]>(day.resources.map((r) => r.id));
+  const [skillFileIds, setSkillFileIds] = useState<string[]>(day.skill_files.map((s) => s.id));
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   function set<K extends keyof typeof form>(key: K, value: (typeof form)[K]) {
     setForm((f) => ({ ...f, [key]: value }));
+    setSaved(false);
+  }
+
+  function toggleResource(id: string) {
+    setResourceIds((ids) => (ids.includes(id) ? ids.filter((x) => x !== id) : [...ids, id]));
+    setSaved(false);
+  }
+
+  function toggleSkillFile(id: string) {
+    setSkillFileIds((ids) => (ids.includes(id) ? ids.filter((x) => x !== id) : [...ids, id]));
     setSaved(false);
   }
 
@@ -51,6 +76,8 @@ export default function DayEditForm({ day }: { day: Day }) {
         action_html: form.action_html || null,
         proof_required: form.proof_required || null,
         note_html: form.note_html || null,
+        resource_ids: resourceIds,
+        skill_file_ids: skillFileIds,
       };
       await updateDay(day.id, payload);
       setSaved(true);
@@ -172,6 +199,54 @@ export default function DayEditForm({ day }: { day: Day }) {
           rows={5}
           className={`${inputClass} font-mono text-xs`}
         />
+      </div>
+
+      <div className="rounded border border-white/10 p-4">
+        <p className="text-sm font-medium text-text-primary">Recursos de este día</p>
+        <p className="mt-1 text-xs text-text-secondary">
+          Marca las plantillas, el catálogo o la skill que el alumno debería tener a mano dentro
+          de esta carta, además de la sección fija de Recursos.
+        </p>
+
+        {availableResources.length === 0 && availableSkillFiles.length === 0 ? (
+          <p className="mt-3 text-sm text-text-secondary">
+            Todavía no hay recursos en esta edición. Créalos en{" "}
+            <span className="text-accent">Recursos</span> primero.
+          </p>
+        ) : (
+          <div className="mt-3 flex flex-col gap-2">
+            {availableResources.map((r) => (
+              <label
+                key={r.id}
+                className="flex items-center gap-2 text-sm text-text-primary"
+              >
+                <input
+                  type="checkbox"
+                  checked={resourceIds.includes(r.id)}
+                  onChange={() => toggleResource(r.id)}
+                />
+                <span className="text-xs uppercase tracking-wide text-text-secondary">
+                  {r.type === "catalog_item" ? "Catálogo" : "Plantilla"}
+                </span>
+                {r.title}
+              </label>
+            ))}
+            {availableSkillFiles.map((s) => (
+              <label
+                key={s.id}
+                className="flex items-center gap-2 text-sm text-text-primary"
+              >
+                <input
+                  type="checkbox"
+                  checked={skillFileIds.includes(s.id)}
+                  onChange={() => toggleSkillFile(s.id)}
+                />
+                <span className="text-xs uppercase tracking-wide text-text-secondary">Skill</span>
+                {s.title}
+              </label>
+            ))}
+          </div>
+        )}
       </div>
 
       {error && <p className="text-sm text-red-400">{error}</p>}
