@@ -341,7 +341,7 @@ async function main() {
   });
   const dayIdByNumber = new Map(createdDays.map((d) => [d.day_number, d.id]));
 
-  await Promise.all(
+  const newCatalogItems = await Promise.all(
     catalogItems.map((item) =>
       prisma.resource.create({
         data: {
@@ -382,6 +382,16 @@ async function main() {
   });
 
   const templateIds = newTemplates.map((t) => ({ id: t.id }));
+  const catalogIds = newCatalogItems.map((r) => ({ id: r.id }));
+
+  // Día 1: elegir servicio del catálogo si no se tiene uno propio.
+  const day1Id = dayIdByNumber.get(1);
+  if (day1Id) {
+    await prisma.day.update({
+      where: { id: day1Id },
+      data: { resources: { connect: catalogIds } },
+    });
+  }
 
   // Día 3: investigar y montar la demo con la skill.
   const day3Id = dayIdByNumber.get(3);
