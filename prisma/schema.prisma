@@ -1,0 +1,113 @@
+// Prisma usa Postgres como motor estándar. No se usa ningún cliente,
+// auth, storage o función específica de Supabase: solo el motor Postgres
+// a través de DATABASE_URL (pooler) y DIRECT_URL (directo, solo migraciones).
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum ResourceType {
+  catalog_item
+  template
+}
+
+model Edition {
+  id         String   @id @default(cuid())
+  name       String
+  start_date DateTime
+  end_date   DateTime
+  is_active  Boolean  @default(false)
+  created_at DateTime @default(now())
+
+  days        Day[]
+  students    Student[]
+  resources   Resource[]
+  skill_files SkillFile[]
+
+  @@map("editions")
+}
+
+model Day {
+  id                    String   @id @default(cuid())
+  edition_id            String
+  edition               Edition  @relation(fields: [edition_id], references: [id], onDelete: Cascade)
+  day_number            Int
+  date                  DateTime
+  title                 String
+  time_estimate_minutes Int?
+  is_live_session       Boolean  @default(false)
+  live_session_label    String?
+  is_unlocked           Boolean  @default(false)
+
+  why_today       String? @db.Text
+  action_html     String? @db.Text
+  proof_required  String? @db.Text
+  note_html       String? @db.Text
+
+  audio_url String?
+  video_url String?
+
+  progress Progress[]
+
+  @@unique([edition_id, day_number])
+  @@index([edition_id])
+  @@map("days")
+}
+
+model Student {
+  id         String   @id @default(cuid())
+  edition_id String
+  edition    Edition  @relation(fields: [edition_id], references: [id], onDelete: Cascade)
+  name       String
+  created_at DateTime @default(now())
+
+  progress Progress[]
+
+  @@index([edition_id])
+  @@map("students")
+}
+
+model Progress {
+  id           String   @id @default(cuid())
+  student_id   String
+  student      Student  @relation(fields: [student_id], references: [id], onDelete: Cascade)
+  day_id       String
+  day          Day      @relation(fields: [day_id], references: [id], onDelete: Cascade)
+  completed_at DateTime @default(now())
+
+  @@unique([student_id, day_id])
+  @@index([day_id])
+  @@map("progress")
+}
+
+model Resource {
+  id           String       @id @default(cuid())
+  edition_id   String
+  edition      Edition      @relation(fields: [edition_id], references: [id], onDelete: Cascade)
+  type         ResourceType
+  title        String
+  content_html String       @db.Text
+  price_range  String?
+  sort_order   Int          @default(0)
+
+  @@index([edition_id])
+  @@map("resources")
+}
+
+model SkillFile {
+  id                String  @id @default(cuid())
+  edition_id        String
+  edition           Edition @relation(fields: [edition_id], references: [id], onDelete: Cascade)
+  title             String
+  download_url      String
+  instructions_html String  @db.Text
+
+  @@index([edition_id])
+  @@map("skill_files")
+}
