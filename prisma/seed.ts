@@ -210,22 +210,424 @@ const days: SeedDay[] = [
   },
 ];
 
-const PLACEHOLDER_TITLE = "Pendiente";
-
-for (let dayNumber = 8; dayNumber <= 30; dayNumber++) {
-  days.push({
-    day_number: dayNumber,
-    title: PLACEHOLDER_TITLE,
-    time_estimate_minutes: null,
+days.push(
+  {
+    day_number: 8,
+    title: "Reescritura",
+    time_estimate_minutes: 60,
     is_live_session: false,
     live_session_label: null,
     is_unlocked: false,
-    why_today: null,
-    action_html: null,
-    proof_required: null,
-    note_html: null,
-  });
-}
+    why_today:
+      "Llevas una semana con un mensaje y ya tienes datos reales sobre él: cuántos contestaron, cuántos no, qué pasó cuando contestaron. Hoy no se prueba nada nuevo. Se corrige lo que ya existe, con lo que aprendiste el domingo, no con teoría.",
+    action_html: `<p><strong>La acción</strong></p>
+<ol>
+<li>Relee tu recuento del domingo: cuántos enviados, cuántas respuestas, cuántos silencios, cuántas negativas.</li>
+<li><strong>Si nadie contestó</strong>, el problema está casi siempre en la primera línea. La gente decide en tres segundos si sigue leyendo. Prueba a poner el detalle concreto del negocio por delante, antes incluso del saludo.</li>
+<li><strong>Si contestaron pero la conversación se enfrió</strong>, el problema suele estar en el cierre. "Échale un ojo cuando puedas" no pide nada. Prueba a cerrar con una pregunta concreta que solo admita sí o no: "¿te viene bien que te lo enseñe cinco minutos esta semana?"</li>
+<li>Escribe la versión nueva justo debajo de la vieja, para poder comparar las dos.</li>
+</ol>
+<p>No cambies la apertura y el cierre a la vez. Si tocas las dos cosas en el mismo mensaje, la semana que viene no vas a saber cuál de las dos cambió algo.</p>`,
+    proof_required: "Mensaje viejo y mensaje nuevo, uno debajo del otro, en el grupo.",
+    note_html: `<p><strong>Nota.</strong> Esta reescritura es la que vas a usar toda la semana 2. No la retoques cada día: dale al menos quince envíos antes de volver a tocarla, o nunca vas a saber si funciona.</p>`,
+  },
+  {
+    day_number: 9,
+    title: "Entra el frío",
+    time_estimate_minutes: 120,
+    is_live_session: false,
+    live_session_label: null,
+    is_unlocked: false,
+    why_today:
+      "Esta semana se acaba la gente que ya te conoce. A partir de hoy escribes a quien no tiene ni idea de quién eres, y es la primera prueba real de si tu mensaje aguanta solo, sin la red de la relación previa por debajo.",
+    action_html: `<p><strong>La acción</strong></p>
+<ol>
+<li>Usa la skill de prospección para sacar 15 negocios de tu nicho que no conozcas de nada.</li>
+<li>Investiga cada uno con la skill de investigación de prospecto: qué hacen, qué horario tienen, cómo gestionan hoy el problema de tu nicho, algo concreto que puedas nombrar en el mensaje.</li>
+<li>Envía tu mensaje reescrito de ayer a los 15. Si el negocio no es al que le hiciste la demo del día 3, ajusta el detalle concreto a lo que hayas encontrado de él en la investigación. No envíes el mismo detalle a los 15: eso se nota.</li>
+<li>Regístralos en tu lista o CRM si ya lo has empezado, con el canal marcado como "frío".</li>
+</ol>`,
+    proof_required: "Captura de los 15 mensajes enviados.",
+    note_html: `<p><strong>Audio del día · 75 segundos.</strong> Hoy cambia una cosa importante: ya no le escribes a nadie que te conozca. Vas a notar la diferencia en el estómago antes que en las respuestas. No es que el mensaje se haya vuelto peor. Es que hasta ahora tenías una red debajo. Si el vecino no contestaba, no dolía igual que si no contesta un desconocido. No busques validación extra para compensar. No mandes el mensaje más largo, ni más amable, ni con más explicaciones. El mensaje que ya tienes fue probado la semana pasada. Hoy solo cambia a quién se lo mandas.</p>`,
+  },
+  {
+    day_number: 10,
+    title: "Seguimiento total",
+    time_estimate_minutes: 90,
+    is_live_session: false,
+    live_session_label: null,
+    is_unlocked: false,
+    why_today:
+      "De aquí sale la mitad de las respuestas de todo el reto. Es la tarea con menos glamour de las 30 y la de mejor retorno por minuto invertido.",
+    action_html: `<p><strong>La acción</strong></p>
+<ol>
+<li>Repasa todos los mensajes enviados desde el día 4 que no hayan tenido respuesta. Sí, incluidos los de hace una semana.</li>
+<li>A cada uno, un segundo toque corto: "¿llegaste a verlo? Sin prisa" o algo equivalente. No repitas el mensaje entero, no expliques por qué vuelves a escribir.</li>
+<li>A los que ya contestaron pero la conversación quedó a medias, empuja un paso más: "¿te viene bien que hablemos cinco minutos esta semana?"</li>
+<li>Anota en tu lista o CRM la fecha de cada seguimiento.</li>
+</ol>`,
+    proof_required: "Recuento de cuántos seguimientos enviaste y cuántas respuestas nuevas trajeron.",
+    note_html: `<p><strong>Nota.</strong> Si llevas diez días sin tocar a alguien de tu lista, no es tarde para escribirle hoy. El seguimiento se hace toda la duración del reto, no solo esta semana.</p>`,
+  },
+  {
+    day_number: 11,
+    title: "El precio, en voz alta",
+    time_estimate_minutes: 90,
+    is_live_session: true,
+    live_session_label: "Directo",
+    is_unlocked: false,
+    why_today:
+      "Decir un precio en voz alta y escribirlo en un mensaje son dos habilidades distintas. La primera es la que te va a fallar en la primera llamada si no la entrenas antes de que haga falta de verdad.",
+    action_html: `<p><strong>La acción, antes de la sesión</strong></p>
+<ol>
+<li>Graba un audio de 60 segundos diciendo tu precio en voz alta, dirigido a un cliente imaginario.</li>
+<li>La justificación no puede ser tu esfuerzo. "Me ha llevado dos semanas montarlo" no vale. Tiene que ser el coste del problema para el cliente: "porque esto os está costando aproximadamente X al mes".</li>
+<li>Practícalo dos o tres veces en voz alta antes de grabar la versión que envías.</li>
+</ol>
+<p><strong>La sesión.</strong> Se comparten varios audios y se corrigen en directo: si suena a disculpa, si justifica por tiempo en vez de por problema, si el precio baja dentro de la misma frase en que se dice.</p>`,
+    proof_required: "El audio, publicado en el grupo antes de la sesión.",
+    note_html: `<p><strong>Aviso.</strong> Si al grabarlo bajas el precio a mitad de frase sin darte cuenta, es la señal más clara de que el bloqueo no es técnico. Se corrige en la sesión, no antes.</p>`,
+  },
+  {
+    day_number: 12,
+    title: "Guion de llamada",
+    time_estimate_minutes: 90,
+    is_live_session: false,
+    live_session_label: null,
+    is_unlocked: false,
+    why_today:
+      "La semana que viene coges el teléfono por primera vez en el reto. Sin un guion delante, la primera llamada se queda en blanco a los diez segundos, y ese silencio es lo que hace que cueste el doble marcar el segundo número.",
+    action_html: `<p><strong>La acción</strong></p>
+<ol>
+<li><strong>Apertura (10 seg).</strong> Quién eres y por qué llamas, en una frase.</li>
+<li><strong>Cualificación económica al principio.</strong> Una pregunta que te diga rápido si merece la pena seguir hablando, sin sonar a interrogatorio.</li>
+<li><strong>Pregunta de dolor.</strong> Que hable él, no tú. "¿Cómo lo gestionáis ahora mismo?" y luego silencio.</li>
+<li><strong>Puente a reunión o a demo.</strong> "Tengo un ejemplo montado, ¿tienes diez minutos esta semana para que te lo enseñe?"</li>
+<li><strong>Tres objeciones reales</strong> que ya te hayan puesto por escrito estas dos semanas, con una respuesta corta preparada para cada una.</li>
+<li>Practícalo en voz alta tres veces. Que no suene leído la tercera vez.</li>
+</ol>`,
+    proof_required:
+      "El guion escrito completo, y una nota confirmando que lo practicaste en voz alta tres veces.",
+    note_html: `<p><strong>Nota.</strong> El guion no es para leerlo durante la llamada. Es para que la estructura esté en tu cabeza y no te quedes en blanco. Si lo lees palabra por palabra, se nota.</p>`,
+  },
+  {
+    day_number: 13,
+    title: "Tu CRM",
+    time_estimate_minutes: 90,
+    is_live_session: false,
+    live_session_label: null,
+    is_unlocked: false,
+    why_today:
+      "Ya llevas más de treinta contactos entre agenda, primeros envíos y frío. Se te están empezando a perder seguimientos, y de aquí a la semana 4 se van a perder muchos más si esto no se ordena hoy.",
+    action_html: `<p><strong>La acción</strong></p>
+<ol>
+<li>Monta una tabla, en Airtable, Sheets o lo que uses, con estas columnas: <strong>nombre · negocio · teléfono · canal (agenda, frío, referido, calle) · estado (nuevo, contactado, respondió, llamada, propuesta, cerrado, perdido) · próximo paso · fecha próximo paso</strong>.</li>
+<li>Vuelca ahí todos los contactos que llevas hasta hoy, con su estado real, no el que te gustaría que tuvieran.</li>
+<li>Revisa uno a uno: ¿tiene un próximo paso escrito? Si no lo tiene, no sabes qué hacer con él mañana, y es exactamente ahí donde se pierden.</li>
+</ol>`,
+    proof_required: "Captura del CRM con todos los contactos volcados y su estado.",
+    note_html: `<p><strong>Nota.</strong> No se monta antes porque no hacía falta antes: con diez contactos se lleva en la cabeza sin problema. Con treinta, no, y a partir de hoy vas a superar esa cifra cada semana.</p>`,
+  },
+  {
+    day_number: 14,
+    title: "El rechazo como dato",
+    time_estimate_minutes: 60,
+    is_live_session: false,
+    live_session_label: null,
+    is_unlocked: false,
+    why_today:
+      "Llevas dos semanas recibiendo noes y silencios. Hoy los miras de frente, con números, en vez de dejar que se acumulen como una sensación difusa de que esto no funciona.",
+    action_html: `<p><strong>La acción</strong></p>
+<ol>
+<li>Cuenta cuántos noes claros y cuántos silencios llevas en total desde el día 4.</li>
+<li>De los últimos cinco, escribe qué te enseñó cada uno: ¿era el mensaje?, ¿era el nicho?, ¿era el momento en que escribiste?</li>
+<li>Escribe una frase corta que te vaya a servir para marcar el siguiente número la semana que viene, cuando toque llamar.</li>
+</ol>`,
+    proof_required: "Los números y la reflexión, publicados en el grupo.",
+    note_html: `<p><strong>Audio del día · 75 segundos.</strong> Llevas dos semanas recibiendo noes, y en algún momento de estos días te ha pasado por la cabeza que quizás esto no es para ti. Los números que has ido publicando dicen otra cosa. Dicen que has enviado, que has vuelto a escribir cuando no contestaban, que has grabado un precio en voz alta aunque te diera vergüenza. Eso no lo hace el que no vale para esto. Eso lo hace el que está aprendiendo a vender. La semana que viene entra el teléfono. Va a dar más miedo que escribir. Y vas a hacerlo igual, porque ya has demostrado que sabes hacer cosas con miedo.</p>`,
+  },
+  {
+    day_number: 15,
+    title: "Propuesta en una página",
+    time_estimate_minutes: 90,
+    is_live_session: false,
+    live_session_label: null,
+    is_unlocked: false,
+    why_today:
+      "En cuanto alguien diga \"cuéntame más\", necesitas tener algo que enviar en ese momento, no montarlo esa misma noche con prisa y mal.",
+    action_html: `<p><strong>La acción</strong></p>
+<ol>
+<li>Una sola página, no más. Estructura: el problema (con el número real, no genérico), qué resuelves, qué entregas exactamente, en cuánto tiempo, precio.</li>
+<li>Sin cifras de resultado inventadas. Si no tienes casos reales todavía, no pongas casos: pon tu demo como ejemplo, con honestidad.</li>
+<li>Cierre con un paso concreto y accionable: "para empezar, hacemos X", no "hablamos y vemos".</li>
+</ol>`,
+    proof_required: "El PDF de la propuesta.",
+    note_html: `<p><strong>Nota.</strong> Esta propuesta la vas a reutilizar toda la semana 3 y 4. No hace falta rehacerla para cada cliente, solo cambiar el nombre del negocio y el detalle concreto.</p>`,
+  },
+  {
+    day_number: 16,
+    title: "Segunda ronda de frío",
+    time_estimate_minutes: 120,
+    is_live_session: false,
+    live_session_label: null,
+    is_unlocked: false,
+    why_today:
+      "El mensaje ya está probado dos veces, con conocidos y con desconocidos. A estas alturas del reto toca subir el volumen, porque el pipeline de las semanas 3 y 4 depende de lo que siembres ahora.",
+    action_html: `<p><strong>La acción</strong></p>
+<ol>
+<li>Saca veinte negocios nuevos de tu nicho con la skill de prospección.</li>
+<li>Usa el mensaje reescrito del día 8, adaptado al detalle concreto de cada uno.</li>
+<li>Envía los veinte y actualiza el CRM con cada uno: canal "frío", estado "contactado", fecha de hoy.</li>
+</ol>`,
+    proof_required: "Captura de los veinte enviados y el CRM actualizado.",
+    note_html: `<p><strong>Nota.</strong> Veinte en un día es más volumen del que has manejado hasta ahora. Resérvate al menos noventa minutos seguidos, no lo trocees entre otras cosas: se nota en la calidad de la personalización.</p>`,
+  },
+  {
+    day_number: 17,
+    title: "Primera llamada",
+    time_estimate_minutes: 90,
+    is_live_session: false,
+    live_session_label: null,
+    is_unlocked: false,
+    why_today:
+      "Mañana es la sesión donde se analiza una llamada real delante de todos. Necesitas tener al menos una hecha o agendada antes de llegar a esa sesión.",
+    action_html: `<p><strong>La acción</strong></p>
+<ol>
+<li>Revisa tu CRM: quién tiene teléfono y ha mostrado algo de interés, aunque sea tibio.</li>
+<li>Llama con el guion del día 12 delante. No hace falta memorizarlo, hace falta tenerlo a mano.</li>
+<li>Si nadie está lo bastante caliente para justificar una llamada en frío hoy, llama a alguien que no haya contestado por escrito. El objetivo de hoy es marcar el número, no que la llamada salga perfecta.</li>
+<li>Registra el resultado en el CRM, sea cual sea.</li>
+</ol>`,
+    proof_required: "Captura de la llamada agendada, o notas de la llamada hecha.",
+    note_html: `<p><strong>Nota.</strong> Da igual si la llamada sale mal o corta. Lo que cuenta hoy es que hayas marcado. La calidad de la llamada se trabaja mañana en la sesión.</p>`,
+  },
+  {
+    day_number: 18,
+    title: "Llamada real corregida",
+    time_estimate_minutes: 90,
+    is_live_session: true,
+    live_session_label: "Directo",
+    is_unlocked: false,
+    why_today:
+      "Una llamada real, corregida delante de todos, enseña más en veinte minutos que diez artículos genéricos sobre cómo vender por teléfono.",
+    action_html: `<p><strong>La sesión.</strong> Se analiza la llamada de uno o dos voluntarios: qué funcionó, en qué momento se cerró la conversación, qué objeción apareció y cómo se respondió en el momento frente a cómo se podría haber respondido.</p>
+<p><strong>La acción.</strong> Llega con tu llamada de ayer (hecha o agendada) y con la lista de objeciones reales que te hayan puesto hasta ahora, por si hace falta compartirlas.</p>`,
+    proof_required: "Tu lista de objeciones reales recogidas hasta hoy.",
+    note_html: `<p><strong>Nota.</strong> Si tu llamada de ayer no dio para mucho, no pasa nada: la sesión de hoy funciona igual analizando la de otro compañero. Lo importante es que participes con tus objeciones reales.</p>`,
+  },
+  {
+    day_number: 19,
+    title: "Objeciones respondidas",
+    time_estimate_minutes: 90,
+    is_live_session: false,
+    live_session_label: null,
+    is_unlocked: false,
+    why_today:
+      "Ayer salieron objeciones reales en la sesión. Hoy se responden por escrito, para no tener que improvisar la próxima vez que aparezcan en una llamada o un mensaje.",
+    action_html: `<p><strong>La acción</strong></p>
+<ol>
+<li>Lista todas las objeciones que te han puesto de verdad estas semanas. No las de un manual de ventas: las tuyas, tal cual te las dijeron.</li>
+<li>Escribe una respuesta corta para cada una. Una o dos frases, no un párrafo.</li>
+<li>Ensaya en voz alta las dos que más te cuesten responder.</li>
+</ol>`,
+    proof_required: "El documento con tus objeciones reales y sus respuestas.",
+    note_html: `<p><strong>Nota.</strong> Este documento crece durante el resto del reto. Cada objeción nueva que te pongan a partir de hoy se añade aquí, no se pierde en la conversación.</p>`,
+  },
+  {
+    day_number: 20,
+    title: "Segundo post y entrega mínima",
+    time_estimate_minutes: 90,
+    is_live_session: false,
+    live_session_label: null,
+    is_unlocked: false,
+    why_today:
+      "Llevas tres semanas de material real. Hoy se cuenta algo de eso en público, y se deja por escrito qué recibe exactamente alguien el día que dice que sí, para no improvisarlo cuando pase.",
+    action_html: `<p><strong>Parte 1 · El post (45 min)</strong></p>
+<p>Un post contando algo concreto de estas tres semanas: una llamada que te sorprendió, una objeción que no esperabas, un número real de tu recuento. Nada de lecciones ni consejos: un hecho, contado como pasó.</p>
+<p><strong>Parte 2 · Entrega mínima (45 min)</strong></p>
+<ol>
+<li>Escribe la lista exacta de lo que entregas cuando alguien dice que sí: qué, en qué plazo, con qué nivel de soporte después.</li>
+<li>No prometas nada que no puedas sostener sin ayuda externa. Si algo depende de un tercero, dilo.</li>
+</ol>`,
+    proof_required: "Enlace al post, y la lista de entregables con plazos.",
+    note_html: `<p><strong>Nota.</strong> La entrega mínima de hoy es la que vas a usar en la semana 4 cuando alguien diga que sí de verdad. Que esté clara ahora te ahorra improvisar bajo presión entonces.</p>`,
+  },
+  {
+    day_number: 21,
+    title: "Pedir la decisión",
+    time_estimate_minutes: 60,
+    is_live_session: false,
+    live_session_label: null,
+    is_unlocked: false,
+    why_today:
+      "Mañana empieza la semana de pedir la decisión a quien está más avanzado. Hoy se prepara, para no improvisarlo persona por persona mañana mismo.",
+    action_html: `<p><strong>La acción</strong></p>
+<ol>
+<li>Repasa tu CRM y haz la lista de a quién se lo vas a pedir mañana: los que estén más avanzados, con más conversación real detrás.</li>
+<li>Escribe la frase exacta con la que se lo vas a pedir a cada uno. Sin rodeos: "¿empezamos?" pesa más que "¿qué te parece?".</li>
+</ol>`,
+    proof_required: "La lista nominal de a quién se lo vas a pedir, más la frase exacta.",
+    note_html: `<p><strong>Nota.</strong> No hace falta que la lista sea larga. Puede ser una sola persona. Lo importante es que la frase esté escrita hoy y no se improvise mañana.</p>`,
+  },
+  {
+    day_number: 22,
+    title: "Se pide la decisión",
+    time_estimate_minutes: 90,
+    is_live_session: false,
+    live_session_label: null,
+    is_unlocked: false,
+    why_today:
+      "Todo lo anterior ha sido para llegar a este momento. Sin pedirlo explícitamente, la mayoría de conversaciones abiertas se quedan abiertas para siempre, por buenas que hayan sido.",
+    action_html: `<p><strong>La acción</strong></p>
+<ol>
+<li>A cada persona de tu lista de ayer, la pregunta directa que preparaste.</li>
+<li>Sin bajar el precio antes de que nadie lo pida. Si aparece la objeción del pago único, ahí se ofrece el fraccionamiento, no antes.</li>
+<li>Si alguien dice que sí, le entregas la propuesta del día 15 en ese mismo momento, con su nombre y su detalle concreto.</li>
+</ol>`,
+    proof_required: "Capturas de las peticiones enviadas.",
+    note_html: `<p><strong>Nota.</strong> Un "no" hoy no es un fracaso del reto. Es información. Lo que no vale es no llegar a preguntarlo.</p>`,
+  },
+  {
+    day_number: 23,
+    title: "Tercera ronda",
+    time_estimate_minutes: 120,
+    is_live_session: false,
+    live_session_label: null,
+    is_unlocked: false,
+    why_today:
+      "El pipeline no se llena solo. Lo que siembras hoy no va a cerrar esta semana, va a cerrar en noviembre, y eso es exactamente lo que hace que el mes que viene no tengas que empezar de cero.",
+    action_html: `<p><strong>La acción</strong></p>
+<ol>
+<li>Veinte negocios nuevos de tu nicho, con la skill de prospección.</li>
+<li>El mensaje ya probado y reescrito, adaptado al detalle de cada uno.</li>
+<li>CRM actualizado con los veinte.</li>
+</ol>`,
+    proof_required: "Captura de los veinte enviados y el CRM.",
+    note_html: `<p><strong>Nota.</strong> A estas alturas el mensaje ya no debería costarte escribirlo. Si te sigue costando cada vez, revisa si de verdad lo has interiorizado o lo estás reescribiendo desde cero cada día.</p>`,
+  },
+  {
+    day_number: 24,
+    title: "Dos llamadas",
+    time_estimate_minutes: 90,
+    is_live_session: false,
+    live_session_label: null,
+    is_unlocked: false,
+    why_today:
+      "El teléfono no se abandona porque ya hayas hecho una llamada la semana pasada. Se sostiene, porque es donde se cierran las conversaciones que el mensaje escrito deja a medias.",
+    action_html: `<p><strong>La acción</strong></p>
+<ol>
+<li>Revisa el CRM y elige al menos dos contactos con teléfono y algo de interés mostrado.</li>
+<li>Llama con el guion delante, registra el resultado de cada llamada al momento, no de memoria más tarde.</li>
+</ol>`,
+    proof_required: "Notas de las dos llamadas en el CRM.",
+    note_html: `<p><strong>Nota.</strong> Si de las dos llamadas una no contesta, cuenta igual como llamada hecha para el número de hoy. Marcar es la tarea, no que te lo cojan.</p>`,
+  },
+  {
+    day_number: 25,
+    title: "Los déjame pensarlo",
+    time_estimate_minutes: 90,
+    is_live_session: false,
+    live_session_label: null,
+    is_unlocked: false,
+    why_today:
+      "Un \"déjame pensarlo\" casi nunca es sobre el precio de verdad. Es un no blando, y se rompe preguntando qué falta, no insistiendo en que decidan.",
+    action_html: `<p><strong>La acción</strong></p>
+<ol>
+<li>Repasa tu CRM: quién quedó en "lo estoy pensando" o similar.</li>
+<li>A cada uno, una pregunta concreta y distinta según su caso: "¿qué te haría falta ver para decidirte?" en vez de "¿ya lo pensaste?".</li>
+<li>Escucha la respuesta entera antes de proponer nada, aunque te dé la sensación de saber ya qué va a decir.</li>
+</ol>`,
+    proof_required: "Capturas de las conversaciones reabiertas.",
+    note_html: `<p><strong>Nota.</strong> La pregunta correcta suele destapar la objeción real que no se dijo la primera vez: el pago único, el miedo a no saber usarlo, la comparación con otro presupuesto. Ahí es donde se puede trabajar de verdad.</p>`,
+  },
+  {
+    day_number: 26,
+    title: "Referidos",
+    time_estimate_minutes: 90,
+    is_live_session: false,
+    live_session_label: null,
+    is_unlocked: false,
+    why_today:
+      "Es la tarea con mejor ratio de todo el reto, y la que casi nadie hace, porque parece que se está pidiendo un favor cuando en realidad es una pregunta normal que la gente contesta con gusto.",
+    action_html: `<p><strong>La acción</strong></p>
+<ol>
+<li>A todo el que te dijo que no, una pregunta directa: "¿conoces a alguien a quien esto sí le encaje?"</li>
+<li>A los que ya son clientes o están a punto de serlo, la misma pregunta. El que ya confía en ti es tu mejor fuente de referidos, no solo el que dijo que no.</li>
+<li>Cada nombre nuevo que te den entra directo al CRM, con canal "referido".</li>
+</ol>`,
+    proof_required: "Capturas de las preguntas enviadas y nombres nuevos entrados al CRM.",
+    note_html: `<p><strong>Nota.</strong> No lo plantees como un favor ("¿me harías el favor de...") sino como una pregunta neutra. Cambia por completo cómo lo recibe la otra persona.</p>`,
+  },
+  {
+    day_number: 27,
+    title: "Tu sistema, no el del cliente",
+    time_estimate_minutes: 90,
+    is_live_session: false,
+    live_session_label: null,
+    is_unlocked: false,
+    why_today:
+      "Llevas un mes vendiendo sistemas que automatizan el seguimiento de otros negocios. Hoy toca automatizar el tuyo, porque el seguimiento manual es lo primero que se abandona cuando aumenta el volumen.",
+    action_html: `<p><strong>La acción</strong></p>
+<ol>
+<li>De los contactos que no han contestado en dos semanas o más, monta un recordatorio automático, o al menos una plantilla de reactivación lista para reutilizar, que no dependa de que te acuerdes tú.</li>
+<li>Puede ser tan simple como un recordatorio calendarizado con el mensaje ya escrito y listo para enviar en un clic.</li>
+</ol>`,
+    proof_required: "Captura del sistema funcionando.",
+    note_html: `<p><strong>Nota.</strong> No hace falta que sea sofisticado. El objetivo es que dentro de un mes, cuando tengas ochenta contactos en vez de treinta, el seguimiento no dependa de tu memoria.</p>`,
+  },
+  {
+    day_number: 28,
+    title: "Números de las cuatro semanas",
+    time_estimate_minutes: 60,
+    is_live_session: false,
+    live_session_label: null,
+    is_unlocked: false,
+    why_today:
+      "Antes del último empujón de mañana y pasado, hay que ver el mapa completo del mes: qué ha funcionado de verdad y qué no, con números y no con sensaciones.",
+    action_html: `<p><strong>La acción</strong></p>
+<p>Cinco números, contados desde el día 4 hasta hoy:</p>
+<ol>
+<li>Contactados.</li>
+<li>Respuestas.</li>
+<li>Llamadas hechas.</li>
+<li>Propuestas enviadas.</li>
+<li>Cierres.</li>
+</ol>`,
+    proof_required: "Los cinco números, publicados en el grupo.",
+    note_html: `<p><strong>Nota.</strong> Sean cuales sean los números, son reales, y son más de lo que tenías hace un mes. Mañana y pasado se aprovecha lo que queda de tiempo con esto delante.</p>`,
+  },
+  {
+    day_number: 29,
+    title: "Última ronda y cierre de cabos",
+    time_estimate_minutes: 120,
+    is_live_session: false,
+    live_session_label: null,
+    is_unlocked: false,
+    why_today:
+      "Mañana es el cierre del reto. Hoy no se deja ninguna conversación sin un próximo paso definido, porque lo que quede sin cerrar hoy es lo que se pierde cuando termine el acompañamiento diario.",
+    action_html: `<p><strong>La acción</strong></p>
+<ol>
+<li>Si aún tienes capacidad, veinte contactos nuevos más. Si no, prioriza el punto siguiente.</li>
+<li>Repasa el CRM entero, fila por fila: ninguna puede quedar sin "próximo paso" relleno. Si una conversación no tiene claro qué toca después, decide hoy qué va a ser.</li>
+</ol>`,
+    proof_required: "Captura del CRM sin ningún hueco en la columna de próximo paso.",
+    note_html: `<p><strong>Nota.</strong> Este es el trabajo menos vistoso de los 30 días y el que más determina si el mes que viene arrancas con algo o desde cero.</p>`,
+  },
+  {
+    day_number: 30,
+    title: "Cierre",
+    time_estimate_minutes: 90,
+    is_live_session: true,
+    live_session_label: "Directo de cierre",
+    is_unlocked: false,
+    why_today:
+      "Es el día de mirar los números de verdad, sin adornarlos, y decidir en conjunto qué pasa a partir de mañana con lo que se ha construido este mes.",
+    action_html: `<p><strong>La sesión.</strong> Cada uno comparte sus números reales de los 30 días: contactados, llamadas, propuestas, cierres. Qué se rompió, en qué momento, y qué se lleva a la mentoría quien continúe.</p>
+<p><strong>La acción.</strong> Llega con tus cinco números del día 28 actualizados a hoy, y con una frase honesta sobre qué ha cambiado en ti en estos 30 días, más allá de los números.</p>`,
+    proof_required: "Tus números finales, publicados en el grupo.",
+    note_html: `<p><strong>Nota.</strong> No hay un número mínimo para que el reto se considere un éxito. El éxito es haber accionado 30 días seguidos, cosa que el 99% de la gente que "está aprendiendo IA" no hace nunca.</p>`,
+  }
+);
 
 const catalogItems: Array<{
   title: string;
