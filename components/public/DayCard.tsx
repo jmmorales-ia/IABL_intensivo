@@ -23,12 +23,12 @@ export default function DayCard({
 
   const content = (
     <div
-      className={`flex items-center gap-4 rounded-lg border-l-4 bg-card px-5 py-4 transition ${
+      className={`flex items-center gap-3 rounded-xl border bg-card px-4 py-4 transition sm:gap-4 sm:px-5 ${
         locked
-          ? "border-white/10 opacity-55"
+          ? "border-white/10"
           : isNext
             ? "border-accent shadow-glow hover:bg-card/80"
-            : "border-accent/70 hover:bg-card/80"
+            : "border-white/15 hover:border-accent/40 hover:bg-card/80"
       }`}
     >
       <div
@@ -40,7 +40,7 @@ export default function DayCard({
         <div className="text-xs tracking-wide text-text-secondary">
           {formatDayDate(day.date)}
         </div>
-        <div className="mt-0.5 truncate text-[15px] font-medium text-text-primary">
+        <div className={`mt-0.5 line-clamp-2 text-[15px] font-medium leading-snug ${locked ? "text-text-secondary" : "text-text-primary"}`}>
           {day.title}
         </div>
         {day.is_live_session && day.live_session_label && (

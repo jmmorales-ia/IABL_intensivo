@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Day, Resource, SkillFile } from "@prisma/client";
 import { updateDay, type DayUpdateInput } from "@/lib/actions/admin";
+import DayContent, { type DayWithResources } from "@/components/public/DayContent";
 
 function toDateInputValue(date: Date | string): string {
   const d = new Date(date);
@@ -42,6 +43,7 @@ export default function DayEditForm({
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [previewOpen, setPreviewOpen] = useState(false);
 
   function set<K extends keyof typeof form>(key: K, value: (typeof form)[K]) {
     setForm((f) => ({ ...f, [key]: value }));
@@ -92,9 +94,57 @@ export default function DayEditForm({
   const inputClass =
     "mt-1 w-full rounded border border-white/10 bg-card px-3 py-2 text-text-primary focus:border-accent focus:outline-none";
   const labelClass = "block text-sm text-text-secondary";
+  const previewDay: DayWithResources = {
+    ...day,
+    date: new Date(form.date),
+    title: form.title,
+    time_estimate_minutes: form.time_estimate_minutes ? Number(form.time_estimate_minutes) : null,
+    is_live_session: form.is_live_session,
+    live_session_label: form.live_session_label || null,
+    is_unlocked: form.is_unlocked,
+    why_today: form.why_today || null,
+    action_html: form.action_html || null,
+    proof_required: form.proof_required || null,
+    note_html: form.note_html || null,
+    resources: availableResources.filter((resource) => resourceIds.includes(resource.id)),
+    skill_files: availableSkillFiles.filter((skill) => skillFileIds.includes(skill.id)),
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="flex max-w-3xl flex-col gap-5">
+    <div className="max-w-3xl">
+      {previewOpen ? (
+        <div>
+          <div className="sticky top-0 z-20 mb-6 flex items-center justify-between gap-3 border-b border-white/10 bg-bg/95 py-3 backdrop-blur">
+            <p className="text-sm font-semibold text-text-primary">Vista previa como alumno</p>
+            <button
+              type="button"
+              onClick={() => setPreviewOpen(false)}
+              className="rounded-lg border border-white/20 px-3 py-2 text-sm font-medium text-text-primary hover:border-accent/50"
+            >
+              Volver al editor
+            </button>
+          </div>
+          <DayContent day={previewDay} />
+        </div>
+      ) : (
+    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+      <div className="sticky top-0 z-20 -mx-2 flex items-center gap-3 border-b border-white/10 bg-bg/95 px-2 py-3 backdrop-blur">
+        <button
+          type="submit"
+          disabled={saving}
+          className="rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-white transition hover:bg-accent/90 disabled:opacity-50"
+        >
+          {saving ? "Guardando…" : "Guardar"}
+        </button>
+        <button
+          type="button"
+          onClick={() => setPreviewOpen(true)}
+          className="rounded-lg border border-white/20 px-4 py-2 text-sm font-medium text-text-primary hover:border-accent/50"
+        >
+          Vista previa
+        </button>
+        {saved && <span className="text-sm text-accent">Guardado.</span>}
+      </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
           <label className={labelClass}>Fecha</label>
@@ -251,16 +301,8 @@ export default function DayEditForm({
 
       {error && <p className="text-sm text-red-400">{error}</p>}
 
-      <div className="flex items-center gap-3">
-        <button
-          type="submit"
-          disabled={saving}
-          className="rounded bg-accent px-5 py-2 font-medium text-white transition hover:bg-accent/90 disabled:opacity-50"
-        >
-          {saving ? "Guardando…" : "Guardar"}
-        </button>
-        {saved && <span className="text-sm text-accent">Guardado.</span>}
-      </div>
     </form>
+      )}
+    </div>
   );
 }

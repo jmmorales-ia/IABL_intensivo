@@ -15,7 +15,7 @@ export default function ResourceSection({
   }
 
   return (
-    <section className="mt-14 flex flex-col gap-10 border-t border-white/10 pt-10">
+    <section className="mt-8 flex flex-col gap-10">
       {catalog.length > 0 && (
         <div>
           <h2 className="text-lg font-semibold text-text-primary">Catálogo de servicios</h2>
