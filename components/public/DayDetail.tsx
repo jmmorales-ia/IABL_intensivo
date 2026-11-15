@@ -40,7 +40,7 @@ export default function DayDetail({
             href="#prueba"
             className="flex-none rounded-lg border border-white/20 px-3 py-3 text-sm font-medium text-text-primary hover:border-accent/60 sm:hidden"
           >
-            Ver prueba
+            Qué entregar
           </a>
         )}
         <button
